@@ -1,0 +1,100 @@
+Dim selectedCell, accountText, primaryEmail As String
+Dim splittingHTML() As String
+Dim i As Long
+Dim IE As Object
+Dim objElement As Object
+Dim objCollection As Object
+
+
+
+Public Sub getPrimaryEmail()
+getSelectedCell
+searchSalesForce
+End Sub
+
+Private Sub searchSalesForce()
+    ' Create InternetExplorer Object
+ 
+    Set IE = New InternetExplorerMedium
+ 
+    ' You can uncoment Next line To see form results
+    IE.Visible = True
+ 
+    ' Send the form data To URL As POST binary request
+    IE.Navigate "https://na7.salesforce.com/home/home.jsp"
+
+    newPage
+    
+    Set objCollection = IE.Document.getElementsByTagName("input")
+ 
+    i = 0
+    While i < objCollection.Length
+        If objCollection(i).ID = "phSearchInput" Then objCollection(i).Value = selectedCell
+        If objCollection(i).ID = "phSearchButton" Then Set objElement = objCollection(i)
+        i = i + 1
+    Wend
+    
+    objElement.Click    ' click button to search
+    
+    ' Wait while IE re-loading...
+    newPage
+    
+    Set objCollection = IE.Document.getElementsByClassName("dataCell")
+    i = 0
+    While i < objCollection.Length
+        If objCollection(i).innerHTML = selectedCell Then accountText = objCollection(i - 1).innerHTML
+        i = i + 1
+    Wend
+    
+    splittingHTML = Split(accountText, """")
+    IE.Navigate "https://na7.salesforce.com" + splittingHTML(3)
+
+    
+    newPage
+    Application.Wait (Now + TimeValue("0:00:06"))
+    
+    Dim flag As Boolean
+    flag = False
+    Set objCollection = IE.Document.getElementsByClassName("dataCell")
+    i = 0
+    While flag = False
+        If InStr(objCollection(i).innerHTML, "mailto:") > 0 Then
+            Set objElement = objCollection(i)
+            flag = True
+        End If
+        i = i + 1
+    Wend
+    Dim clipText As New MSForms.DataObject
+    clipText.SetText objElement.textContent
+    clipText.PutInClipboard
+    ' Show IE
+    IE.Visible = True
+ 
+    ' Clean up
+    Set IE = Nothing
+    Set objElement = Nothing
+    Set objCollection = Nothing
+ 
+    Application.StatusBar = ""
+End Sub
+
+Private Sub getSelectedCell()
+Dim myCells As Range
+Set myCells = Selection
+selectedCell = myCells.Text
+End Sub
+
+Private Sub newPage()
+    Do While IE.Busy
+       DoEvents
+    Loop
+    Set objElement = Nothing
+    Set objCollection = Nothing
+End Sub
+
+Function FnWaitForPageLoad(objIEBrowser)
+
+    Do While objIEBrowser.ReadyState = 4: DoEvents: Loop
+    Do Until objIEBrowser.ReadyState = 4: DoEvents: Loop
+End Function
+

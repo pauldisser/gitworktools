@@ -1,0 +1,56 @@
+Housekeeping: 
+There are certain things in this code that may not work for you, I am sorry. Please try to figure it out based on what is written here before sending anything to me. 
+
+
+FILE PATH PROBLEMS: 
+Your Name Problems: (unlikely for most)
+If your account name (profile name/email name - Alex Jordans is W_jordan) is different than what shows up in excel you may have to go in and hard code certain things like file paths.
+
+EXP:   C:\Users\" + currentRepName(1) + "_" + currentRepName(0) + "\Documents\Quotes\" + quotesArr(0) + ".pdf"
+Alex would have to replace his name here instead of letting the code do its work
+
+
+**Quote Number Problems:
+If you want it to attach quotes, you must save them in this folder "Documents\Quotes" or edit the file path,
+IF YOU WANT THIS TO WORK EASILY YOU MUST SAVE QUOTES AS JUST THE QUOTE NUMBER AND ENTER THEM THE SAME WAY IN YOUR TO_WORK
+
+C:\Users\" + currentRepName(1) + "_" + currentRepName(0) + "\Documents\Quotes\" + quotesArr(0) + ".pdf"
+VMware is a special case, it expects two quote numbers, they must be put in excel sheet as such 1yrquotenum+SPACE+3yrquotenum
+
+Signature Problems:
+Lastly, for file paths, signatures have been something of a pain in this experience so, if you want to skip this simply delete line below out of both send mail subs
+signature = GetBoiler("C:\Users\currentRepName(1)_currentRepName(0)\AppData\Roaming\Microsoft\Signatures\Main.htm") 
+if you want to continue good luck
+
+you will have to change the name of your signature here, mine is named Main, you can find the name of your signature in outlook when you click signature it should show. 
+
+unfortunately this sometimes causes the picture to not display, I dont know why so I had to actually go into the html of my signature, and give it the full file path which I recommend you doing, or getting rid of this all together and adding your signature manually to each email. if you want to fix your html
+
+1. open your signature in notepad by going here (except with your name) and right clicking -> open with -> notepad on the HTML document
+C:\Users\paul_disser\AppData\Roaming\Microsoft\Signatures
+2. ctrl+F to find imagedata
+3. change to full path like so
+<v:imagedata src="C:\Users\paul_disser\AppData\Roaming\Microsoft\Signatures\Main_files\image001.png"
+4. then a couple lines down change the other image file
+src="C:\Users\paul_disser\AppData\Roaming\Microsoft\Signatures\Main_files\image002.jpg"
+
+
+Changing Text Displayed in Emails:
+You can definitely change what text is displayed in your emails, just go down to the bottom of the two modules in the publisherSwitch() sub and change the text however you please. 
+
+If you remember any HTML from myspace you can change your text however you please by editing the HTML formatting string located in sendMailI()
+
+Issues with your TO_WORK sheet vs mine:
+Depending on how your to_work excel sheet is set up some things may not work, you will have to go into the looper() sub and change the column numbers to correspond with where you keep your quotes, etc. most of the varible names are pretty descriptive.
+
+Another thing to understand is that this is taking most of its data from the all data sheet, so if you have different info put into your TO_WORK sheet IT WILL NOT PULL THEM FROM THERE, the only info it pulls from there are quote numbers and your name.
+
+
+
+Misc Problems:
+Issues when trying to CC people. Like LJ's name still shows something completely different than his name in the excel sheet. you'll have to add him to the email manually
+
+Sometimes primary keys are repeated, I put a message in there that pops up if that happens. check your info closely when that message pops up. 
+
+
+

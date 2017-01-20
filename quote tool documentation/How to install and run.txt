@@ -1,0 +1,29 @@
+How to install:
+
+turn on the developer settings:
+First I dont know if you have to do it but if you want to change things in the code you should turn on the developer settings
+https://support.office.com/en-us/article/Show-the-Developer-tab-e1192344-5e56-4d45-931b-e5fd9bea2d45
+
+
+Make sure Macro/add-in security is set to allow:
+1. file -> Options -> Trust Center
+2. Click Trust Center Settings -> Macro Settings.
+3. Choose Disable all macros with notification (may be set already)
+4. Click add-ins, remove check mark for Require add-ins to be signed by trusted publisher
+
+kind of annoying it will now ask you if you want to enable certain add-ins every time you restart excel, but keeps some level of security.
+
+
+Add the add-in
+1. file -> options -> add-ins -> toward the bottom 'go' -> 
+2. click browse 
+3. browse to where ever this add-in is and add it
+4. put a check mark next to it
+5. restart excel
+
+Running the Macro
+1. select renewal id you wish to send/request a quote for. 
+-to request hit ctrl+shift+q
+-to send hit ctrl+shift+w
+
+
