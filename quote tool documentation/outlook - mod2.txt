@@ -1,0 +1,41 @@
+Dim i As Long
+Dim IE As Object
+Dim objElement As Object
+Dim objCollection As Object
+
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Public Sub guestLogIn()
+' Create InternetExplorer Object
+ 
+    Set IE = New InternetExplorerMedium
+ 
+    ' You can uncoment Next line To see form results
+    IE.Visible = True
+ 
+    ' Send the form data To URL As POST binary request
+    IE.navigate "https://uscp-pc1.portal.dell.com/guest/dellregistration.php?cmd=login&mac=a4:08:ea:0d:85:db&ip=172.24.3.220&essid=%20&apname=tunnel%2022&apgroup=&url=http%3A%2F%2F172%2E24%2E0%2E1%2F&_browser=1"
+
+    'newPage
+    Sleep (2300)
+    IE.Document.getElementById("ID_formb83c61b2_guest_register_sponsor_name").Value = "Paul Disser"
+    IE.Document.getElementById("ID_formb83c61b2_guest_register_Dell_sponsor_email").Value = "Paul_Disser@dell.com"
+    IE.Document.getElementById("ID_formb83c61b2_guest_register_visitor_name").Value = "Paul Disser"
+    IE.Document.getElementById("ID_formb83c61b2_guest_register_visitor_company").Value = "Dell"
+    IE.Document.getElementById("ID_formb83c61b2_guest_register_email").Value = "pdisser8@gmail.com"
+    
+    IE.Document.getElementById("LB_ID_formb83c61b2_guest_register_creator_accept_terms").Click
+    
+    
+    
+    IE.Document.getElementById("ID_formb83c61b2_guest_register_submit").Click
+   
+ 
+    
+End Sub
+
+Private Sub newPage()
+    Do While IE.Busy
+       DoEvents
+       
+    Loop
+End Sub

@@ -1,0 +1,30 @@
+Public Sub saveAttachtoDisk(itm As Outlook.MailItem)
+Dim quotes, fileType As String
+Dim objAtt As Outlook.Attachment
+Dim saveFolder As String
+Dim flag As Boolean
+
+saveFolder = "C:\Users\paul_disser\Documents\Quotes"
+quotes = ""
+flag = False
+     For Each objAtt In itm.Attachments
+          fileType = Right(objAtt.DisplayName, 3)
+          If fileType = "PDF" Or fileType = "pdf" Then
+            objAtt.SaveAsFile saveFolder & "\" & objAtt.DisplayName
+            quotes = quotes + Left(objAtt.DisplayName, Len(objAtt.DisplayName) - 4)
+            flag = True
+          End If
+          
+          Set objAtt = Nothing
+     Next
+     If flag = True Then append_text_file (quotes)
+End Sub
+
+Private Sub append_text_file(appendtext As String)
+Dim strFile_Path As String
+strFile_Path = "C:\Users\paul_disser\Documents\Quotes\! quote list.txt"
+Open strFile_Path For Append As #1
+Print #1, appendtext
+Close #1
+End Sub
+

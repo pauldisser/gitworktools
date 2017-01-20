@@ -1,0 +1,28 @@
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Public Sub FollowLinkAddress(itm As Outlook.MailItem)
+Dim oDoc As Object
+Dim IE As Object
+Dim objCollection As Object
+Dim url As String
+Sleep (5000)
+Set itm = Application.ActiveExplorer.Selection(1)
+
+If itm.GetInspector.EditorType = olEditorWord Then
+    Set oDoc = itm.GetInspector.WordEditor
+    For Each h In oDoc.Hyperlinks
+        If InStr(h.TextToDisplay, "click here") > 0 Then url = h.Address
+    Next
+
+End If
+
+
+Set IE = New InternetExplorerMedium
+IE.Visible = True
+Sleep (2000)
+IE.navigate url
+Sleep (3000)
+
+IE.Document.getElementById("ID_formedddea85_guest_register_confirm_submit").Click
+
+
+End Sub
